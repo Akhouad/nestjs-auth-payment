@@ -10,11 +10,11 @@ import { UsersModule } from './users/users.module';
     AuthModule, 
     UsersModule,
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: 'postgres',
       host: 'localhost',
-      port: 3306,
-      username: 'root', // TODO get from env file
-      password: '', // TODO get from env file
+      port: 5432,
+      username: 'joboodle', // TODO get from env file
+      password: 'admin200', // TODO get from env file
       database: 'joboodle', // TODO get from env file
       autoLoadEntities: true,
       synchronize: true,
