@@ -1,11 +1,11 @@
-import { Body, Controller, Get, HttpCode, Post, Req, Request, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { AuthService } from "./services/auth.service";
 import { LocalAuthGuard } from "./guards/local-auth.guard";
 import { JwtAuthGuard } from "./guards/jwt-auth.guard";
-import RegisterDto from "src/users/dto/register";
-import RequestWithUser from "./interfaces/requestWithUser.interface";
 import { User } from "src/users/user.entity";
 import { Response } from "express";
+import RegisterDto from "src/users/dto/register";
+import RequestWithUser from "./interfaces/requestWithUser.interface";
 
 @Controller('auth')
 export class AuthController {
@@ -24,19 +24,18 @@ export class AuthController {
 	async login(@Req() request: RequestWithUser, @Res() response: Response) {
 		const { user } = request;
 		response.setHeader('Set-Cookie', this._authService.getCookieWithJwtAccessToken(user.id));
-		user.password = undefined;
 		return response.send(user);
 	}
 
 	@Post('logout')
-	async logout(@Req() request: RequestWithUser, @Res() response: Response) {
+	async logout(@Res() response: Response) {
 		response.setHeader('Set-Cookie', this._authService.getCookieForLogOut());
 		return response.sendStatus(200);
 	}
 
 	@UseGuards(JwtAuthGuard)
 	@Get('profile')
-	getProfile(@Request() req) {
-		return req.user;
+	getProfile(@Req() request) {
+		return request.user;
 	}
 }
