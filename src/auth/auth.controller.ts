@@ -4,8 +4,8 @@ import { LocalAuthGuard } from "./guards/local-auth.guard";
 import { JwtAuthGuard } from "./guards/jwt-auth.guard";
 import { User } from "src/users/user.entity";
 import { Response } from "express";
-import RegisterDto from "src/users/dto/register";
-import RequestWithUser from "./interfaces/requestWithUser.interface";
+import CreateUserDto from "src/users/dto/create-user.dto";
+import RequestWithUser from "./interfaces/request-with-user.interface";
 
 @Controller('auth')
 export class AuthController {
@@ -14,7 +14,7 @@ export class AuthController {
 	) {}
 
 	@Post('register')
-	async register(@Body() registrationData: RegisterDto): Promise<User> {
+	async register(@Body() registrationData: CreateUserDto): Promise<User> {
 		return this._authService.register(registrationData);
 	}
 
