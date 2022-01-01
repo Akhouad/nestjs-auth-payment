@@ -1,8 +1,9 @@
 import { Exclude } from "class-transformer";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity } from '../base/base-entity';
 
 @Entity()
-export class User {
+class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,3 +21,5 @@ export class User {
   @Exclude()
   currentHashedRefreshToken?: string;
 }
+
+export default User;
