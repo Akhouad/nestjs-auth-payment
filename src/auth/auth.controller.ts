@@ -21,7 +21,7 @@ export class AuthController {
 		return this._authService.register(registrationData);
 	}
 
-	@HttpCode(200)
+	@HttpCode(200) // Because LocalAuthGuard normally returns 201 status code
 	@UseGuards(LocalAuthGuard)
 	@Post('login')
 	async login(@Req() request: RequestWithUser, @Res() response: Response) {

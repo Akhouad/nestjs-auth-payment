@@ -12,6 +12,9 @@ export class AuthService {
 		private _jwtService: JwtService,
 	) { }
 
+	/**
+	 * Checks if the email is unique, if so, registers the user
+	 */
 	async register(registrationData: CreateUserDto): Promise<User> {
 		const hashedPassword = await bcrypt.hash(registrationData.password, 10);
 		try {
@@ -28,6 +31,9 @@ export class AuthService {
 		}
 	}
 
+	/**
+	 * Checks passwords matching and returns the user if they match
+	 */
 	public async getAuthenticatedUser(email: string, hashedPassword: string): Promise<User> {
 		try {
 			const user = await this._userService.getByEmail(email);
@@ -38,6 +44,9 @@ export class AuthService {
 		}
 	}
 
+	/**
+	 * Throws an exception if provided credentials are wrong
+	 */
 	private async _verifyPassword(plainTextPassword: string, hashedPassword: string) {
 		const isPasswordMatching = await bcrypt.compare(
 			hashedPassword,
@@ -49,6 +58,10 @@ export class AuthService {
 		}
 	}
 
+	/**
+	 * Generates a string for the cookie with JWT access token
+	 * which will be sent to Frontend
+	 */
 	getCookieWithJwtAccessToken(userId: number): string {
 		const payload: TokenPayload = { userId };
 		const token = this._jwtService.sign(payload, {
@@ -58,6 +71,10 @@ export class AuthService {
 		return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME}`;
 	}
 
+	/**
+	 * Generates a string for the cookie with JWT refresh token
+	 * which will be sent to Frontend
+	 */
 	getCookieWithJwtRefreshToken(userId: number) {
 		const payload: TokenPayload = { userId };
 		const token = this._jwtService.sign(payload, {
@@ -71,6 +88,10 @@ export class AuthService {
 		};
 	}
 
+	/**
+	 * Removes tokens from cookies
+	 * so it will be sent to Frontend
+	 */
 	getCookiesForLogOut() {
 		return [
 			'Authentication=; HttpOnly; Path=/; Max-Age=0',

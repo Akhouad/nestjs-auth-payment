@@ -1,6 +1,6 @@
 import { Exclude } from "class-transformer";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { BaseEntity } from '../base/base-entity';
+import { BaseEntity } from '../base/base.entity';
 
 @Entity()
 class User extends BaseEntity {
