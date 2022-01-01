@@ -2,7 +2,7 @@ import { Body, Controller, Get, HttpCode, Post, Req, Res, UseGuards } from "@nes
 import { AuthService } from "./services/auth.service";
 import { LocalAuthGuard } from "./guards/local-auth.guard";
 import { JwtAuthGuard } from "./guards/jwt-auth.guard";
-import { User } from "src/users/user.entity";
+import User from "src/users/user.entity";
 import { Response } from "express";
 import CreateUserDto from "src/users/dto/create-user.dto";
 import RequestWithUser from "./interfaces/request-with-user.interface";
